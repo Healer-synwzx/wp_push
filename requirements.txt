@@ -1,0 +1,4 @@
+werobot
+flask
+flask-sqlalchemy
+redis
