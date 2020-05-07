@@ -2,3 +2,4 @@ werobot
 flask
 flask-sqlalchemy
 redis
+gunicorn
