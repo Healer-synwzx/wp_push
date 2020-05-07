@@ -4,7 +4,7 @@ from flaskapp import db
 class PushMap(db.Model):
     __tablename__ = 'haowu_push_map'
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    unique_id = db.Column(db.String(128), index=True)
+    push_token = db.Column(db.String(128), index=True)
     openid = db.Column(db.String(128))
 
     @staticmethod

@@ -1,3 +1,4 @@
+import uuid
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from werobot.contrib.flask import make_view
@@ -26,14 +27,14 @@ def push():
     new_down = args.get("new_down")
     total_down = args.get("total_down")
     total = args.get("total")
-    unique_id = args["unique_id"]
+    push_token = args["token"]
 
     from models import PushMap
-    push_map = PushMap.query.filter(PushMap.unique_id == unique_id).first()
+    push_map = PushMap.query.filter(PushMap.push_token == push_token).first()
     if not push_map:
         return jsonify({
             "code": 404,
-            "message": "未找到 unique_id 对应的绑定记录！"
+            "message": "未找到 token 对应的绑定记录！"
         })
 
     robot.client.send_template_message(
@@ -62,12 +63,14 @@ def check_scan():
     open_id = redis_client.get_scened_flag(unique_id)
     if open_id:
         from models import PushMap
+        push_token = uuid.uuid3(uuid.NAMESPACE_DNS, unique_id)
         PushMap.insert_or_update({
-            "unique_id": unique_id,
+            "push_token": push_token,
             "openid": open_id,
         })
         return jsonify({
-            "code": 200
+            "code": 200,
+            "token": push_token
         })
     return jsonify({
         "code": 404
