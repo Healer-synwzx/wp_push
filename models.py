@@ -9,7 +9,7 @@ class PushMap(db.Model):
 
     @staticmethod
     def insert_or_update(push_map):
-        m = PushMap.query.filter(PushMap.unique_id == push_map["unique_id"]).first()
+        m = PushMap.query.filter(PushMap.push_token == push_map["push_token"]).first()
         if not m:
             m = PushMap(**push_map)
             db.session.add(m)
@@ -20,6 +20,6 @@ class PushMap(db.Model):
 
 if __name__ == '__main__':
     PushMap.insert_or_update({
-        "unique_id": "123456",
+        "push_token": "123456",
         "openid": "kjhkj"
     })
