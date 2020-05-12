@@ -63,7 +63,7 @@ def check_scan():
     open_id = redis_client.get_scened_flag(unique_id)
     if open_id:
         from models import PushMap
-        push_token = uuid.uuid3(uuid.NAMESPACE_DNS, unique_id)
+        push_token = str(uuid.uuid3(uuid.NAMESPACE_DNS, unique_id))
         PushMap.insert_or_update({
             "push_token": push_token,
             "openid": open_id,
