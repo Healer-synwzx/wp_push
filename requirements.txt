@@ -1,5 +1,6 @@
 werobot
 flask
 flask-sqlalchemy
+pymysql
 redis
 gunicorn

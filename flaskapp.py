@@ -77,7 +77,7 @@ def check_scan():
     })
 
 
-@app.route("/get_qr_code")
+@app.route("/get_qrcode")
 def get_qr_code():
     unique_id = request.args["unique_id"]
     qr_data = robot.client.create_qrcode(
@@ -89,4 +89,4 @@ def get_qr_code():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=12345, debug=True)
+    app.run(host='0.0.0.0', port=8081, debug=True)
