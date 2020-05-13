@@ -24,9 +24,6 @@ app.add_url_rule(
 @app.route('/push')
 def push():
     args = request.args
-    new_down = args.get("new_down")
-    total_down = args.get("total_down")
-    total = args.get("total")
     push_token = args["token"]
 
     from models import PushMap
@@ -37,19 +34,31 @@ def push():
             "message": "未找到 token 对应的绑定记录！"
         })
 
+    new_down_link = args.get("new_down_link")
+    down_link_count = args.get("down_link_count")
+    down_answer = args.get("down_answer")
+    new_down_answer = args.get("new_down_answer")
+    coupon_down_link = args.get("coupon_down_link")
+
     robot.client.send_template_message(
         user_id=push_map.openid,
         template_id=PUSH_TEMPLATE_ID,
         data={
-            "new_down": {
-                "value": new_down,
+            "new_down_link": {
+                "value": new_down_link,
             },
-            "total_down": {
-                "value": total_down,
+            "down_link_count": {
+                "value": down_link_count,
             },
-            "total": {
-                "value": total,
-            }
+            "down_answer": {
+                "value": down_answer,
+            },
+            "new_down_answer": {
+                "value": new_down_answer,
+            },
+            "coupon_down_link": {
+                "value": coupon_down_link,
+            },
         }
     )
     return jsonify({
